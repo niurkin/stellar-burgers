@@ -1,9 +1,11 @@
 import { FC, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 
 export const OrderInfo: FC = () => {
+  const { number } = useParams();
   /** TODO: взять переменные orderData и ingredients из стора */
   const orderData = {
     createdAt: '',
