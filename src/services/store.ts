@@ -1,4 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineSlices } from '@reduxjs/toolkit';
+import { ingredientsSlice } from './ingredientsSlice';
+import { errorLogMiddleware } from './errorLogMiddleware';
 
 import {
   TypedUseSelectorHook,
@@ -6,11 +8,13 @@ import {
   useSelector as selectorHook
 } from 'react-redux';
 
-const rootReducer = () => {}; // Заменить на импорт настоящего редьюсера
+const rootReducer = combineSlices(ingredientsSlice);
 
 const store = configureStore({
   reducer: rootReducer,
-  devTools: process.env.NODE_ENV !== 'production'
+  devTools: process.env.NODE_ENV !== 'production',
+  middleware: (getDefaultMiddleware) =>
+  getDefaultMiddleware().concat(errorLogMiddleware)
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
