@@ -1,4 +1,7 @@
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from '../../services/store';
+import { getIngredients } from '../../services/ingredientsSlice';
 import {
   ConstructorPage,
   Feed,
@@ -26,6 +29,11 @@ const App = () => {
   const location = useLocation();
   const background = location.state?.background;
   const closeModal = () => navigate(-1);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+      dispatch(getIngredients());
+    }, [dispatch]);
 
   return (
     <div className={styles.app}>

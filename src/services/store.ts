@@ -1,5 +1,6 @@
 import { configureStore, combineSlices } from '@reduxjs/toolkit';
 import { ingredientsSlice } from './ingredientsSlice';
+import { constructorSlice } from './constructorSlice';
 import { errorLogMiddleware } from './errorLogMiddleware';
 
 import {
@@ -8,13 +9,12 @@ import {
   useSelector as selectorHook
 } from 'react-redux';
 
-const rootReducer = combineSlices(ingredientsSlice);
+const rootReducer = combineSlices(ingredientsSlice, constructorSlice);
 
 const store = configureStore({
   reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production',
-  middleware: (getDefaultMiddleware) =>
-  getDefaultMiddleware().concat(errorLogMiddleware)
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(errorLogMiddleware)
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
