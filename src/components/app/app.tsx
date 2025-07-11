@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate, matchPath } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from '../../services/store';
 import { getIngredients } from '../../services/ingredientsSlice';
@@ -30,6 +30,11 @@ const App = () => {
   const background = location.state?.background;
   const closeModal = () => navigate(-1);
   const dispatch = useDispatch();
+
+  const modalMatchFeed = matchPath('/feed/:number', location.pathname);
+  const modalMatchProfile = matchPath('/profile/orders/:number', location.pathname);
+  const orderNumber = modalMatchFeed?.params?.number || modalMatchProfile?.params?.number || '';
+  const orderDetailsTitle = `#${orderNumber}`;
 
   useEffect(() => {
       dispatch(getIngredients());
@@ -111,7 +116,7 @@ const App = () => {
           <Route
             path='/feed/:number'
             element={
-              <Modal title='' onClose={closeModal}>
+              <Modal title={orderDetailsTitle} onClose={closeModal}>
                 <OrderInfo />
               </Modal>
             }
@@ -120,7 +125,7 @@ const App = () => {
             path='/profile/orders/:number'
             element={
               <ProtectedRoute>
-                <Modal title='' onClose={closeModal}>
+                <Modal title={orderDetailsTitle} onClose={closeModal}>
                   <OrderInfo />
                 </Modal>
               </ProtectedRoute>

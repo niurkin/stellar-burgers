@@ -1,6 +1,7 @@
 import { configureStore, combineSlices } from '@reduxjs/toolkit';
 import { ingredientsSlice } from './ingredientsSlice';
 import { constructorSlice } from './constructorSlice';
+import { orderFeedSlice } from './orderFeedSlice';
 import { errorLogMiddleware } from './errorLogMiddleware';
 
 import {
@@ -9,7 +10,7 @@ import {
   useSelector as selectorHook
 } from 'react-redux';
 
-const rootReducer = combineSlices(ingredientsSlice, constructorSlice);
+const rootReducer = combineSlices(ingredientsSlice, constructorSlice, orderFeedSlice);
 
 const store = configureStore({
   reducer: rootReducer,
