@@ -3,13 +3,13 @@ import { FeedUI } from '@ui-pages';
 import { TOrder } from '@utils-types';
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from '../../services/store';
-import { selectAllOrders, getAllOrders } from '../../services/orderFeedSlice';
+import { selectAllOrders, selectOrdersLoading, getAllOrders } from '../../services/orderFeedSlice';
 
 export const Feed: FC = () => {
   const dispatch = useDispatch();
   const odersData = useSelector(selectAllOrders);
-  const orders: TOrder[] = odersData.feed;
-  const isLoading = odersData.loading;
+  const orders: TOrder[] = odersData.orders;
+  const isLoading = useSelector(selectOrdersLoading);
 
   useEffect(() => {
         dispatch(getAllOrders());

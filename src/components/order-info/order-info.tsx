@@ -4,10 +4,11 @@ import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useSelector, useDispatch } from '../../services/store';
-import { selectOrderByNumber, getAllOrders } from '../../services/orderFeedSlice';
+import { selectOrderByNumber, getOrderByNumber } from '../../services/orderFeedSlice';
 import { selectIngredients } from '../../services/ingredientsSlice';
 
 export const OrderInfo: FC = () => {
+
   const dispatch = useDispatch();
   const { number } = useParams<{ number: string }>();
   
@@ -58,10 +59,8 @@ export const OrderInfo: FC = () => {
   }, [orderData, ingredients]);
 
   useEffect(() => {
-    if (!orderData) {
-      dispatch(getAllOrders());
-    }
-  }, [dispatch, orderData]);
+          dispatch(getOrderByNumber(orderNumber));
+        }, [dispatch]);
 
   if (!orderInfo) {
     return <Preloader />;
