@@ -6,20 +6,25 @@ import commonStyles from '../common.module.css';
 
 import { ProfileUIProps } from './type';
 import { ProfileMenu } from '@components';
+import { Preloader } from '../../preloader';
 
 export const ProfileUI: FC<ProfileUIProps> = ({
   formValue,
   isFormChanged,
   updateUserError,
+  isLoading,
   handleSubmit,
   handleCancel,
-  handleInputChange
-}) => (
+  handleInputChange,
+}) => {
+
+  return (
   <main className={`${commonStyles.container}`}>
     <div className={`mt-30 mr-15 ${styles.menu}`}>
       <ProfileMenu />
     </div>
-    <form
+    { isLoading ? (<Preloader />) : (
+      <form
       className={`mt-30 ${styles.form} ${commonStyles.form}`}
       onSubmit={handleSubmit}
     >
@@ -86,6 +91,7 @@ export const ProfileUI: FC<ProfileUIProps> = ({
           </p>
         )}
       </>
-    </form>
+    </form>)}
   </main>
 );
+}

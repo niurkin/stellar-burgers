@@ -24,6 +24,8 @@ export const errorLogMiddleware: Middleware = (store) => (next: any) => (action:
         return `Не удалось обновить данные пользователя. Ошибка: ${message}`;
       case 'user/logout':
         return `Не удалось выйти из учетной записи. Ошибка: ${message}`;
+      case 'user/check':
+        return `Не удалось проверить авторизацию. Ошибка: ${message}`;
       default:
         return `Ошибка: ${message}`;
     }

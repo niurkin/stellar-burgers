@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
-//import clsx from 'clsx';
+import clsx from 'clsx';
 import styles from './app-header.module.css';
 import { TAppHeaderUIProps } from './type';
 import {
@@ -11,7 +11,7 @@ import {
 } from '@zlden/react-developer-burger-ui-components';
 
 export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => {
-const linkClass = (isActive: boolean) =>  `${styles.link} ${isActive ? styles.link_active : ''}`;
+const linkClass = (isActive: boolean) =>  clsx(styles.link, { [styles.link_active]: isActive });;
 const iconType = (isActive: boolean) => isActive ? 'primary' : 'secondary';
 
   return (
@@ -38,7 +38,7 @@ const iconType = (isActive: boolean) => isActive ? 'primary' : 'secondary';
       <div className={styles.logo}>
         <Logo className='' />
       </div>
-      <NavLink to={'/profile'} className={({ isActive }) => `${styles.link_position_last} ${linkClass(isActive)}`}>
+      <NavLink to={'/profile'} className={({ isActive }) => clsx(styles.link_position_last, linkClass(isActive))}>
       {({isActive}) => (
         <>
         <ProfileIcon type={iconType(isActive)} />
