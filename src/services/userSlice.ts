@@ -8,14 +8,14 @@ export type TUserState = {
   isAuthenticated: boolean;
   user: TUser | null;
   loading: boolean;
-  error: string | null;
+  error: string;
 };
 
 const initialState: TUserState = {
   isAuthenticated: false,
   user: null,
   loading: false,
-  error: null
+  error: ''
 };
 
 export const registerUser = createAsyncThunk(
@@ -65,7 +65,7 @@ export const userSlice = createSlice({
     state.error = action.payload;
   },
   clearError(state) {
-    state.error = null;
+    state.error = '';
   },
 },
   extraReducers: (builder) => {
@@ -77,7 +77,7 @@ export const userSlice = createSlice({
         state.user = action.payload.user;
         state.isAuthenticated = true;
         state.loading = false;
-        state.error = null;
+        state.error = '';
       })
       .addCase(registerUser.rejected, (state) => {
         state.loading = false;
@@ -90,7 +90,7 @@ export const userSlice = createSlice({
         state.user = action.payload.user;
         state.isAuthenticated = true;
         state.loading = false;
-        state.error = null;
+        state.error = '';
       })
       .addCase(loginUser.rejected, (state) => {
         state.loading = false;
@@ -103,7 +103,7 @@ export const userSlice = createSlice({
         state.user = action.payload.user;
         state.isAuthenticated = true;
         state.loading = false;
-        state.error = null;
+        state.error = '';
       })
       .addCase(getUser.rejected, (state) => {
         state.loading = false;
@@ -117,7 +117,7 @@ export const userSlice = createSlice({
       .addCase(updateUser.fulfilled, (state, action: PayloadAction<TUserResponse>) => {
         state.loading = false;
         state.user = action.payload.user;
-        state.error = null;
+        state.error = '';
       })
       .addCase(updateUser.rejected, (state) => {
         state.loading = false;
@@ -131,7 +131,7 @@ export const userSlice = createSlice({
         state.loading = false;
         state.user = null;
         state.isAuthenticated = false;
-        state.error = null;
+        state.error = '';
       })
       .addCase(logoutUser.rejected, (state) => {
         state.loading = false;
@@ -140,3 +140,7 @@ export const userSlice = createSlice({
 });
 
 export const selectUserData = (state: RootState) => state.user;
+export const selectUser = (state: RootState) => state.user.user;
+export const selectUserError = (state: RootState) => state.user.error;
+export const selectUserLoading = (state: RootState) => state.user.loading;
+export const { setError, clearError } = userSlice.actions;
