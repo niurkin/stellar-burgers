@@ -9,7 +9,7 @@ import {
   logoutApi,
   TLoginData,
   TRegisterData,
-  TUserResponse,
+  TUserResponse
 } from '../utils/burger-api';
 import { RootState } from './store';
 

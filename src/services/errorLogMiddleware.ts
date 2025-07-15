@@ -1,5 +1,5 @@
 import { Middleware } from '@reduxjs/toolkit';
-import { setError } from '../userSlice';
+import { setError } from './userSlice';
 
 export const errorLogMiddleware: Middleware =
   (store) => (next: any) => (action: any) => {
@@ -7,7 +7,7 @@ export const errorLogMiddleware: Middleware =
       const message = action.error.message;
       const [name, method, ...rest] = action.type.split('/');
 
-      const knownError = (() => {
+      const errorText = (() => {
         switch (`${name}/${method}`) {
           case 'ingredients/get':
             return `Не удалось загрузить ингредиенты. Ошибка: ${message}`;
@@ -29,17 +29,19 @@ export const errorLogMiddleware: Middleware =
             return `Не удалось проверить авторизацию. Ошибка: ${message}`;
           case 'user/resetPassword':
             return `Не удалось восстановить пароль. Ошибка: ${message}`;
-          case 'order/make':
+          case 'order/place':
             return `Не удалось сделать заказ. Ошибка: ${message}`;
+          case 'order/placeFromConstructor':
+            return `Не удалось сделать заказ в конструкторе. Ошибка: ${message}`;
           default:
             return `Ошибка: ${message}`;
         }
       })();
 
-      console.error(knownError);
+      console.error(errorText);
 
       if (name === 'user') {
-        store.dispatch(setError(knownError));
+        store.dispatch(setError(errorText));
       }
     }
 

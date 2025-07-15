@@ -16,8 +16,8 @@ const initialState: TOrderState = {
   lastOrder: null
 };
 
-export const makeOrder = createAsyncThunk(
-  'order/make',
+export const placeOrder = createAsyncThunk(
+  'order/place',
   async (data: Array<string>) => orderBurgerApi(data)
 );
 
@@ -25,27 +25,27 @@ export const orderSlice = createSlice({
   name: 'currentOrder',
   initialState,
   reducers: {
+    setOrder: (state, action: PayloadAction<Array<string>>) => {
+      state.order = action.payload;
+    },
     clearOrder(state) {
       state.order = [];
     },
     clearlastOrder(state) {
       state.lastOrder = null;
-    },
-    setOrder(state, action: PayloadAction<Array<string>>) {
-      state.order = action.payload;
     }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(makeOrder.pending, (state) => {
+      .addCase(placeOrder.pending, (state) => {
         state.loading = true;
       })
-      .addCase(makeOrder.fulfilled, (state, action) => {
+      .addCase(placeOrder.fulfilled, (state, action) => {
         state.lastOrder = action.payload.order;
         state.loading = false;
         state.order = [];
       })
-      .addCase(makeOrder.rejected, (state) => {
+      .addCase(placeOrder.rejected, (state) => {
         state.loading = false;
       });
   }
