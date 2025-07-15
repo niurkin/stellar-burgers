@@ -2,7 +2,11 @@ import { FC, SyntheticEvent, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 import { useClearErrorOnUnmount } from '../../hooks/useClearErrorOnUnmount';
 import { useDispatch, useSelector } from '../../services/store';
-import { loginUser,  selectUserError, selectUserLoading } from '../../services/userSlice';
+import {
+  loginUser,
+  selectUserError,
+  selectUserLoading
+} from '../../services/userSlice';
 import { Preloader } from '../../components/ui';
 
 export const Login: FC = () => {

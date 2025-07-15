@@ -9,8 +9,10 @@ type ProtectedRouteProps = {
   children: React.ReactElement;
 };
 
-export const ProtectedRoute = ({ onlyUnAuth, children }: ProtectedRouteProps) => {
-  
+export const ProtectedRoute = ({
+  onlyUnAuth,
+  children
+}: ProtectedRouteProps) => {
   const isAuthChecked = useSelector(selectUserAuthChecked);
   const user = useSelector(selectUser);
   const location = useLocation();
@@ -24,9 +26,9 @@ export const ProtectedRoute = ({ onlyUnAuth, children }: ProtectedRouteProps) =>
   }
 
   if (onlyUnAuth && user) {
-        const from  = location.state?.from || { pathname: '/' };
+    const from = location.state?.from || { pathname: '/' };
 
-        return <Navigate replace to={from} />;
+    return <Navigate replace to={from} />;
   }
 
   return children;

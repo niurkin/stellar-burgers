@@ -4,14 +4,16 @@ import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useSelector, useDispatch } from '../../services/store';
-import { selectOrderByNumber, getOrderByNumber } from '../../services/orderFeedSlice';
+import {
+  selectOrderByNumber,
+  getOrderByNumber
+} from '../../services/orderFeedSlice';
 import { selectIngredients } from '../../services/ingredientsSlice';
 
 export const OrderInfo: FC = () => {
-
   const dispatch = useDispatch();
   const { number } = useParams<{ number: string }>();
-  
+
   const orderNumber = Number(number);
   const orderData = useSelector(selectOrderByNumber(orderNumber));
 
@@ -59,8 +61,8 @@ export const OrderInfo: FC = () => {
   }, [orderData, ingredients]);
 
   useEffect(() => {
-          dispatch(getOrderByNumber(orderNumber));
-        }, [dispatch]);
+    dispatch(getOrderByNumber(orderNumber));
+  }, [dispatch]);
 
   if (!orderInfo) {
     return <Preloader />;

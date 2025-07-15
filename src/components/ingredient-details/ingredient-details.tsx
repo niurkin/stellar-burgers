@@ -6,7 +6,6 @@ import { Preloader } from '../ui/preloader';
 import { IngredientDetailsUI } from '../ui/ingredient-details';
 
 export const IngredientDetails: FC = () => {
-  
   const { id } = useParams<{ id: string }>();
 
   const ingredientData = useSelector(selectIngredientById(id || ''));

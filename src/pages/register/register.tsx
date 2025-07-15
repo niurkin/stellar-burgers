@@ -2,7 +2,11 @@ import { FC, SyntheticEvent, useState } from 'react';
 import { RegisterUI } from '@ui-pages';
 import { useClearErrorOnUnmount } from '../../hooks/useClearErrorOnUnmount';
 import { useDispatch, useSelector } from '../../services/store';
-import { registerUser, selectUserLoading, selectUserError } from '../../services/userSlice';
+import {
+  registerUser,
+  selectUserLoading,
+  selectUserError
+} from '../../services/userSlice';
 import { Preloader } from '../../components/ui';
 
 export const Register: FC = () => {

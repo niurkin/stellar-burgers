@@ -3,7 +3,8 @@ import { ingredientsSlice } from './ingredientsSlice';
 import { constructorSlice } from './constructorSlice';
 import { orderFeedSlice } from './orderFeedSlice';
 import { userSlice } from './userSlice';
-import { errorLogMiddleware } from './errorLogMiddleware';
+import { orderSlice } from './orderSlice';
+import { errorLogMiddleware } from './middleware/errorLogMiddleware';
 
 import {
   TypedUseSelectorHook,
@@ -11,12 +12,19 @@ import {
   useSelector as selectorHook
 } from 'react-redux';
 
-const rootReducer = combineSlices(ingredientsSlice, constructorSlice, orderFeedSlice, userSlice);
+const rootReducer = combineSlices(
+  ingredientsSlice,
+  constructorSlice,
+  orderFeedSlice,
+  userSlice,
+  orderSlice
+);
 
 const store = configureStore({
   reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production',
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(errorLogMiddleware)
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(errorLogMiddleware)
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
