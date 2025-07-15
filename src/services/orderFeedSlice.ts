@@ -1,14 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder, TOrdersData } from '../utils/types';
-import { getFeedsApi, getOrderByNumberApi } from '../utils/burger-api';
+import {
+  getFeedsApi,
+  getOrderByNumberApi,
+  getOrdersApi
+} from '../utils/burger-api';
 import { RootState } from './store';
 
 export type TOrderFeedState = {
   loading: boolean;
   allOrders: TOrdersData;
-  userOrders: {
-    feed: Array<TOrder>;
-  };
+  userOrders: Array<TOrder>;
+  orderPreview: TOrder | null;
 };
 
 const initialState: TOrderFeedState = {
@@ -18,13 +21,17 @@ const initialState: TOrderFeedState = {
     total: 0,
     totalToday: 0
   },
-  userOrders: {
-    feed: []
-  }
+  userOrders: [],
+  orderPreview: null
 };
 
 export const getAllOrders = createAsyncThunk('orders/get', async () =>
   getFeedsApi()
+);
+
+export const getUserOrders = createAsyncThunk(
+  'orders/getUserOrders',
+  async () => getOrdersApi()
 );
 
 export const getOrderByNumber = createAsyncThunk(
@@ -50,24 +57,27 @@ export const orderFeedSlice = createSlice({
       .addCase(getAllOrders.rejected, (state) => {
         state.loading = false;
       })
+      .addCase(getUserOrders.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getUserOrders.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userOrders = action.payload;
+      })
+      .addCase(getUserOrders.rejected, (state) => {
+        state.loading = false;
+      })
       .addCase(getOrderByNumber.pending, (state) => {
         state.loading = true;
+        state.orderPreview = null;
       })
       .addCase(getOrderByNumber.fulfilled, (state, action) => {
         state.loading = false;
-
-        const newOrder = action.payload.orders[0];
-        const index = state.allOrders.orders.findIndex(
-          (order) => order.number === newOrder.number
-        );
-        if (index === -1) {
-          state.allOrders.orders.push(newOrder);
-        } else {
-          state.allOrders.orders[index] = newOrder;
-        }
+        state.orderPreview = action.payload.orders[0];
       })
       .addCase(getOrderByNumber.rejected, (state) => {
         state.loading = false;
+        state.orderPreview = null;
       });
   }
 });
@@ -75,5 +85,7 @@ export const orderFeedSlice = createSlice({
 export const selectAllOrders = (state: RootState) => state.orderFeed.allOrders;
 export const selectOrdersLoading = (state: RootState) =>
   state.orderFeed.loading;
-export const selectOrderByNumber = (number: number) => (state: RootState) =>
-  state.orderFeed.allOrders.orders.find((order) => order.number === number);
+export const selectOrderPreview = (state: RootState) =>
+  state.orderFeed.orderPreview;
+export const selectUserOrders = (state: RootState) =>
+  state.orderFeed.userOrders;
