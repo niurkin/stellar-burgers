@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import React from 'react';
 import { Navigate, useLocation } from 'react-router';
 import { Preloader } from '../ui/preloader';
@@ -9,10 +10,10 @@ type ProtectedRouteProps = {
   children: React.ReactElement;
 };
 
-export const ProtectedRoute = ({
+export const ProtectedRoute: FC<ProtectedRouteProps> = ({
   onlyUnAuth,
   children
-}: ProtectedRouteProps) => {
+}) => {
   const isAuthChecked = useSelector(selectUserAuthChecked);
   const user = useSelector(selectUser);
   const location = useLocation();

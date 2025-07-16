@@ -27,6 +27,7 @@ import {
   AppHeader,
   ProtectedRoute,
   Modal,
+  DetailsWrapper,
   OrderInfo,
   IngredientDetails
 } from '@components';
@@ -62,7 +63,14 @@ const App = () => {
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed'>
           <Route index element={<Feed />} />
-          <Route path=':number' element={<OrderInfo />} />
+          <Route
+            path=':number'
+            element={
+              <DetailsWrapper title={orderDetailsTitle}>
+                <OrderInfo />
+              </DetailsWrapper>
+            }
+          />
         </Route>
         <Route
           path='/login'
@@ -117,12 +125,21 @@ const App = () => {
             path='orders/:number'
             element={
               <ProtectedRoute>
-                <OrderInfo />
+                <DetailsWrapper title={orderDetailsTitle}>
+                  <OrderInfo />
+                </DetailsWrapper>
               </ProtectedRoute>
             }
           />
         </Route>
-        <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        <Route
+          path='/ingredients/:id'
+          element={
+            <DetailsWrapper title='Детали ингредиента'>
+              <IngredientDetails />
+            </DetailsWrapper>
+          }
+        />
         <Route path='*' element={<NotFound404 />} />
       </Routes>
 
