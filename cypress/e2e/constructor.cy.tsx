@@ -3,19 +3,27 @@ import { TIngredient } from '../../src/utils/types';
 describe('проверка работы конструктора', () => {
   let bun: TIngredient;
   let main: TIngredient;
+  let orderNumber: string;
 
-  function addIngredients(bun: TIngredient, main: TIngredient) {
-     cy.get(`[data-cy=${bun._id}]`).find('button').click();
-     cy.get(`[data-cy=${main._id}]`).find('button').click();
+  const addIngredients = (bun: TIngredient, main: TIngredient) => {
+    cy.get(`[data-cy=${bun._id}]`).find('button').click();
+    cy.get(`[data-cy=${main._id}]`).find('button').click();
   }
-  
+
   before(() => {
     cy.fixture('ingredients.json').then((ingredients) => {
       bun = ingredients.data.find((i: TIngredient) => i.type === 'bun');
       main = ingredients.data.find((i: TIngredient) => i.type === 'main');
+
+      expect(bun, 'должен присутсвовать хотя бы один ингредиент с типом bun').to
+        .exist;
+      expect(main, 'должен присутсвовать хотя бы один ингредиент с типом main')
+        .to.exist;
     });
+
+    cy.fixture('orderSuccess.json').then((result) => orderNumber = result.order.number.toString());
   });
-  
+
   beforeEach(() => {
     cy.intercept('GET', `${Cypress.env('apiUrl')}/ingredients`, {
       fixture: 'ingredients.json'
@@ -33,5 +41,39 @@ describe('проверка работы конструктора', () => {
       cy.contains('(низ)').should('exist').and('contain', bun.name);
       cy.contains(main.name).should('exist');
     });
+  });
+
+  it('заказ успешно отправляется', () => {
+    cy.setCookie('accessToken', 'mockedAccessToken');
+    cy.window().then((win) => {
+      win.localStorage.setItem('refreshToken', 'mockedRefreshToken');
+    });
+    
+    cy.intercept('GET', `${Cypress.env('apiUrl')}/auth/user`, {
+      fixture: 'user.json'
+    }).as('getUser');
+    
+    cy.intercept('POST', `${Cypress.env('apiUrl')}/orders`, {
+      fixture: 'orderSuccess.json'
+    }).as('placeOrder');
+
+    cy.wait('@getUser');
+
+    addIngredients(bun, main);
+
+    cy.get(`[data-cy='constructor']`).find(`[data-cy='send']`).click();
+    cy.wait('@placeOrder');
+
+    cy.get(`[data-cy='modal']`).should('exist').and('contain', orderNumber);
+
+   cy.get(`[data-cy='constructor']`).within(() => {
+    cy.contains(bun.name).should('not.exist');
+    cy.contains(main.name).should('not.exist');
+    cy.contains('Выберите булки').should('exist');
+    cy.contains('Выберите начинку').should('exist');
+  });
+    
+    cy.clearCookies();
+    cy.clearLocalStorage();
   });
 });

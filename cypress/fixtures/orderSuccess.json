@@ -1,0 +1,17 @@
+{
+  "success": true,
+  "order": {
+    "_id": "6887cc83d5ca30001cffc58b",
+    "status": "pending",
+    "name": "Краторный био-марсианский бургер",
+    "createdAt": "2025-07-28T19:16:19.874Z",
+    "updatedAt": "2025-07-28T19:16:20.686Z",
+    "number": 77777,
+    "ingredients": [
+      "643d69a5c3f7b9001cfa093c",
+      "643d69a5c3f7b9001cfa0941",
+      "643d69a5c3f7b9001cfa093c"
+    ]
+  },
+  "name": "Краторный био-марсианский бургер"
+}

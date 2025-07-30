@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TOrder } from '../utils/types';
 import { orderBurgerApi } from '../utils/burger-api';
-import { TConstructorState } from './constructorSlice';
 import { RootState } from './store';
 
 export type TOrderState = {
