@@ -8,7 +8,10 @@ describe('проверка работы конструктора', () => {
   const addIngredients = (bun: TIngredient, main: TIngredient) => {
     cy.get(`[data-cy=${bun._id}]`).find('button').click();
     cy.get(`[data-cy=${main._id}]`).find('button').click();
-  }
+  };
+
+  const clickIngredient = (ingredient: TIngredient) =>
+    cy.get(`[data-cy=${bun._id}]`).find(`[data-cy='ingredient']`).click();
 
   before(() => {
     cy.fixture('ingredients.json').then((ingredients) => {
@@ -21,7 +24,9 @@ describe('проверка работы конструктора', () => {
         .to.exist;
     });
 
-    cy.fixture('orderSuccess.json').then((result) => orderNumber = result.order.number.toString());
+    cy.fixture('orderSuccess.json').then(
+      (result) => (orderNumber = result.order.number.toString())
+    );
   });
 
   beforeEach(() => {
@@ -48,15 +53,16 @@ describe('проверка работы конструктора', () => {
     cy.window().then((win) => {
       win.localStorage.setItem('refreshToken', 'mockedRefreshToken');
     });
-    
+
     cy.intercept('GET', `${Cypress.env('apiUrl')}/auth/user`, {
       fixture: 'user.json'
     }).as('getUser');
-    
+
     cy.intercept('POST', `${Cypress.env('apiUrl')}/orders`, {
       fixture: 'orderSuccess.json'
     }).as('placeOrder');
 
+    cy.reload();
     cy.wait('@getUser');
 
     addIngredients(bun, main);
@@ -66,14 +72,37 @@ describe('проверка работы конструктора', () => {
 
     cy.get(`[data-cy='modal']`).should('exist').and('contain', orderNumber);
 
-   cy.get(`[data-cy='constructor']`).within(() => {
-    cy.contains(bun.name).should('not.exist');
-    cy.contains(main.name).should('not.exist');
-    cy.contains('Выберите булки').should('exist');
-    cy.contains('Выберите начинку').should('exist');
-  });
-    
+    cy.get(`[data-cy='modal']`).find(`[data-cy='close']`).click();
+
+    cy.get(`[data-cy='modal']`).should('not.exist');
+
+    cy.get(`[data-cy='constructor']`).within(() => {
+      cy.contains(bun.name).should('not.exist');
+      cy.contains(main.name).should('not.exist');
+      cy.contains('Выберите булки').should('exist');
+      cy.contains('Выберите начинку').should('exist');
+    });
+
     cy.clearCookies();
     cy.clearLocalStorage();
+  });
+
+  it('открывается модальное окно с деталями ингредиента', () => {
+    clickIngredient(bun);
+
+    cy.get(`[data-cy='modal']`).should('exist').and('contain', bun.name);
+
+    cy.get(`[data-cy='modal']`).find(`[data-cy='close']`).click();
+
+    cy.get(`[data-cy='modal']`).should('not.exist');
+  });
+
+  it('модальное окно закрывается по нажатию на оверлей', () => {
+    clickIngredient(bun);
+
+    cy.get(`[data-cy='modal']`).should('exist');
+
+    cy.get(`[data-cy='overlay']`).click({ force: true });
+    cy.get('[data-cy="modal"]').should('not.exist');
   });
 });
