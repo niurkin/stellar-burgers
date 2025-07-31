@@ -3,7 +3,7 @@ import { TIngredient } from '../utils/types';
 import { getIngredientsApi } from '../utils/burger-api';
 import { RootState } from './store';
 
-type TIngredientsState = {
+export type TIngredientsState = {
   ingredients: Array<TIngredient>;
   loading: boolean;
 };
@@ -36,6 +36,7 @@ export const ingredientsSlice = createSlice({
   }
 });
 
+export default ingredientsSlice.reducer;
 export const selectIngredients = (state: RootState) =>
   state.ingredientList.ingredients;
 export const selectIngredientsLoading = (state: RootState) =>
