@@ -8,7 +8,10 @@ import constructorReducer, {
 import { TIngredient, TConstructorIngredient } from '../../utils/types';
 import { mockIngredient, mockBun } from '../__mocks__/mocks';
 
-const createConstructorIngredient = (ingredient: TIngredient, newId: string): TConstructorIngredient => {
+const createConstructorIngredient = (
+  ingredient: TIngredient,
+  newId: string
+): TConstructorIngredient => {
   return { ...ingredient, id: newId };
 };
 
@@ -52,14 +55,18 @@ describe('Редьюсеры constructorSlice', () => {
       removeIngredient('1')
     );
 
-    expect(emptyState.ingredients).toHaveLength(0);
+    expect(emptyState).toEqual(initialState);
   });
 
   test('порядок ингредиентов успешно изменяется', () => {
-    const mockIngredient1: TConstructorIngredient =
-      createConstructorIngredient(mockIngredient, '1');
-    const mockIngredient2: TConstructorIngredient =
-      createConstructorIngredient(mockIngredient, '2');
+    const mockIngredient1: TConstructorIngredient = createConstructorIngredient(
+      mockIngredient,
+      '1'
+    );
+    const mockIngredient2: TConstructorIngredient = createConstructorIngredient(
+      mockIngredient,
+      '2'
+    );
 
     const state: TConstructorState = {
       bun: undefined,
@@ -71,7 +78,10 @@ describe('Редьюсеры constructorSlice', () => {
       reorderIngredient({ fromIndex: 0, toIndex: 1 })
     );
 
-    expect(reorderedState.ingredients).toEqual([mockIngredient2, mockIngredient1]);
+    expect(reorderedState).toEqual({
+      bun: undefined,
+      ingredients: [mockIngredient2, mockIngredient1]
+    });
   });
 
   test('состояние успешно сбрасывается', () => {

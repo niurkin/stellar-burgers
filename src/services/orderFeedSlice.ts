@@ -82,6 +82,7 @@ export const orderFeedSlice = createSlice({
   }
 });
 
+export default orderFeedSlice.reducer;
 export const selectAllOrders = (state: RootState) => state.orderFeed.allOrders;
 export const selectOrdersLoading = (state: RootState) =>
   state.orderFeed.loading;

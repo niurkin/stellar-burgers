@@ -11,6 +11,8 @@ describe('Редьюсеры ingredientsSlice', () => {
     loading: false
   };
 
+  const loadingState: TIngredientsState = {...initialState, loading: true};
+
   test('правильно обрабатывается getIngredients.pending', () => {
     const state = ingredientsReducer(initialState, {
       type: getIngredients.pending.type
@@ -25,7 +27,7 @@ describe('Редьюсеры ingredientsSlice', () => {
   test('правильно обрабатывается getIngredients.fulfilled', () => {
     const mockIngredients: TIngredient[] = [mockIngredient, mockBun];
 
-    const state = ingredientsReducer(initialState, {
+    const state = ingredientsReducer(loadingState, {
       type: getIngredients.fulfilled.type,
       payload: mockIngredients
     });
@@ -37,12 +39,8 @@ describe('Редьюсеры ingredientsSlice', () => {
   });
 
   test('правильно обрабатывается getIngredients.rejected', () => {
-    const previousState = {
-      ingredients: [],
-      loading: true
-    };
 
-    const state = ingredientsReducer(previousState, {
+    const state = ingredientsReducer(loadingState, {
       type: getIngredients.rejected.type
     });
 

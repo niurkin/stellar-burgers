@@ -1,8 +1,8 @@
-import { TIngredient } from '../../utils/types';
+import { TIngredient, TOrder, TOrdersData } from '../../utils/types';
 
 export const mockIngredient: TIngredient = {
   _id: 'main-id',
-  name: 'Биокотлета из марсианской Магнолии',
+  name: 'Котлета',
   type: 'main',
   proteins: 420,
   fat: 142,
@@ -16,7 +16,7 @@ export const mockIngredient: TIngredient = {
 
 export const mockBun: TIngredient = {
   _id: 'bun-id',
-  name: 'Краторная булка N-200i',
+  name: 'Булка',
   type: 'bun',
   proteins: 80,
   fat: 24,
@@ -26,4 +26,20 @@ export const mockBun: TIngredient = {
   image: 'image-url',
   image_mobile: 'image-mobile-url',
   image_large: 'image-large-url'
+};
+
+export const mockOrder: TOrder = {
+  _id: 'order-id',
+  status: 'pending',
+  name: 'Бургер',
+  createdAt: '2025-07-28T19:16:19.874Z',
+  updatedAt: '2025-07-28T19:16:20.686Z',
+  number: 77777,
+  ingredients: ['main-id', 'bun-id']
+};
+
+export const mockOrderData: TOrdersData = {
+  orders: [ mockOrder ],
+  total: 1000,
+  totalToday: 50
 };
