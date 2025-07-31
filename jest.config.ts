@@ -25,7 +25,8 @@ const config: Config = {
   collectCoverageFrom: [
     "src/cervices/*.ts",
     "!src/cervices/buildOrderFromConstructor.ts",
-    "!src/cervices/errorLogMiddleware.ts"
+    //"!src/cervices/errorLogMiddleware.ts",
+    //"!src/cervices/store.ts"
   ],
 
   // The directory where Jest should output its coverage files
