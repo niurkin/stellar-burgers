@@ -184,3 +184,4 @@ export const selectUserAuthChecked = (state: RootState) =>
 export const selectUserAuthenticated = (state: RootState) =>
   state.user.isAuthenticated;
 export const { setError, clearError, setAuthChecked } = userSlice.actions;
+export default userSlice.reducer;

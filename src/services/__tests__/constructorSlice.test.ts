@@ -22,40 +22,38 @@ describe('Редьюсеры constructorSlice', () => {
   };
 
   test('булка добавляется в поле bun', () => {
-    const state: TConstructorState = constructorReducer(
-      initialState,
-      addIngredient(mockBun)
-    );
+    const state = constructorReducer(initialState, addIngredient(mockBun));
 
-    expect(state.bun).toEqual(expect.objectContaining(mockBun));
-    expect(state.ingredients).toHaveLength(0);
+    expect(state).toEqual({
+      ...initialState,
+      bun: expect.objectContaining(mockBun)
+    });
   });
 
   test('начинка добавляется в массив ingredients', () => {
-    const state: TConstructorState = constructorReducer(
+    const state = constructorReducer(
       initialState,
       addIngredient(mockIngredient)
     );
 
-    expect(state.ingredients).toHaveLength(1);
-    expect(state.ingredients[0]).toEqual(
-      expect.objectContaining(mockIngredient)
-    );
-    expect(state.bun).toBeUndefined();
+    expect(state).toEqual({
+      ...initialState,
+      ingredients: [expect.objectContaining(mockIngredient)]
+    });
   });
 
   test('ингредиент удаляется по id', () => {
-    const state: TConstructorState = {
+    const stateWithIngredient: TConstructorState = {
       bun: undefined,
       ingredients: [createConstructorIngredient(mockIngredient, '1')]
     };
 
-    const emptyState: TConstructorState = constructorReducer(
-      state,
+    const state = constructorReducer(
+      stateWithIngredient,
       removeIngredient('1')
     );
 
-    expect(emptyState).toEqual(initialState);
+    expect(state).toEqual(initialState);
   });
 
   test('порядок ингредиентов успешно изменяется', () => {
@@ -68,33 +66,33 @@ describe('Редьюсеры constructorSlice', () => {
       '2'
     );
 
-    const state: TConstructorState = {
+    const stateWithIngredients: TConstructorState = {
       bun: undefined,
       ingredients: [mockIngredient1, mockIngredient2]
     };
 
-    const reorderedState: TConstructorState = constructorReducer(
-      state,
+    const state = constructorReducer(
+      stateWithIngredients,
       reorderIngredient({ fromIndex: 0, toIndex: 1 })
     );
 
-    expect(reorderedState).toEqual({
+    expect(state).toEqual({
       bun: undefined,
       ingredients: [mockIngredient2, mockIngredient1]
     });
   });
 
   test('состояние успешно сбрасывается', () => {
-    const state: TConstructorState = {
+    const stateWithIngredients: TConstructorState = {
       bun: createConstructorIngredient(mockBun, '1'),
       ingredients: [createConstructorIngredient(mockIngredient, '2')]
     };
 
-    const emptyState: TConstructorState = constructorReducer(
-      state,
+    const state: TConstructorState = constructorReducer(
+      stateWithIngredients,
       resetConstructor()
     );
 
-    expect(emptyState).toEqual(initialState);
+    expect(state).toEqual(initialState);
   });
 });

@@ -1,4 +1,4 @@
-import { TIngredient, TOrder, TOrdersData } from '../../utils/types';
+import { TIngredient, TOrder, TOrdersData, TUser } from '../../utils/types';
 
 export const mockIngredient: TIngredient = {
   _id: 'main-id',
@@ -42,4 +42,14 @@ export const mockOrderData: TOrdersData = {
   orders: [ mockOrder ],
   total: 1000,
   totalToday: 50
+};
+
+export const mockUser: TUser = {
+  email: 'test@email.com',
+  name: 'Tester'
+};
+
+export const mockUser2: TUser = {
+    name: 'Новое имя',
+    email: 'mock@email.ru'
 };

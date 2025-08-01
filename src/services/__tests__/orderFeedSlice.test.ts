@@ -4,6 +4,7 @@ import orderFeedReducer, {
   getOrderByNumber,
   TOrderFeedState
 } from '../orderFeedSlice';
+import { TOrder } from '../../utils/types';
 import { mockOrder, mockOrderData } from '../__mocks__/mocks';
 
 describe('Редьюсеры orderFeedSlice', () => {
@@ -20,12 +21,17 @@ describe('Редьюсеры orderFeedSlice', () => {
 
   const loadingState: TOrderFeedState = { ...initialState, loading: true };
 
+  const stateWithPreview: TOrderFeedState = {
+    ...initialState,
+    orderPreview: mockOrder
+  };
+
   test('правильно обрабатывается getAllOrders.pending', () => {
     const state = orderFeedReducer(initialState, {
       type: getAllOrders.pending.type
     });
 
-    expect(state.loading).toBe(true);
+    expect(state).toEqual(loadingState);
   });
 
   test('правильно обрабатывается getAllOrders.fulfilled', () => {
@@ -34,8 +40,7 @@ describe('Редьюсеры orderFeedSlice', () => {
       payload: mockOrderData
     });
 
-    expect(state.loading).toBe(false);
-    expect(state.allOrders).toEqual(mockOrderData);
+    expect(state).toEqual({ ...initialState, allOrders: mockOrderData });
   });
 
   test('правильно обрабатывается getAllOrders.rejected', () => {
@@ -43,7 +48,7 @@ describe('Редьюсеры orderFeedSlice', () => {
       type: getAllOrders.rejected.type
     });
 
-    expect(state.loading).toBe(false);
+    expect(state).toEqual(initialState);
   });
 
   test('правильно обрабатывается getUserOrders.pending', () => {
@@ -51,19 +56,18 @@ describe('Редьюсеры orderFeedSlice', () => {
       type: getUserOrders.pending.type
     });
 
-    expect(state.loading).toBe(true);
+    expect(state).toEqual(loadingState);
   });
 
   test('правильно обрабатывается getUserOrders.fulfilled', () => {
-    const orders = [mockOrder];
+    const orders: TOrder[] = [mockOrder];
 
     const state = orderFeedReducer(loadingState, {
       type: getUserOrders.fulfilled.type,
       payload: orders
     });
 
-    expect(state.loading).toBe(false);
-    expect(state.userOrders).toEqual(orders);
+    expect(state).toEqual({ ...initialState, userOrders: orders });
   });
 
   test('правильно обрабатывается getUserOrders.rejected', () => {
@@ -71,46 +75,36 @@ describe('Редьюсеры orderFeedSlice', () => {
       type: getUserOrders.rejected.type
     });
 
-    expect(state.loading).toBe(false);
+    expect(state).toEqual(initialState);
   });
 
   test('правильно обрабатывается getOrderByNumber.pending', () => {
-    const stateWithPreview: TOrderFeedState = {
-      ...initialState,
-      orderPreview: mockOrder
-    };
-
     const state = orderFeedReducer(stateWithPreview, {
       type: getOrderByNumber.pending.type
     });
 
-    expect(state.loading).toBe(true);
-    expect(state.orderPreview).toBe(null);
+    expect(state).toEqual(loadingState);
   });
 
   test('правильно обрабатывается getOrderByNumber.fulfilled', () => {
-    const data = { orders: [mockOrder] };
-
     const state = orderFeedReducer(loadingState, {
       type: getOrderByNumber.fulfilled.type,
-      payload: data
+      payload: { orders: [mockOrder] }
     });
 
-    expect(state.loading).toBe(false);
-    expect(state.orderPreview).toEqual(mockOrder);
+    expect(state).toEqual(stateWithPreview);
   });
 
   test('правильно обрабатывается getOrderByNumber.rejected', () => {
     const loadingStateWithPreview: TOrderFeedState = {
-      ...loadingState,
-      orderPreview: mockOrder
+      ...stateWithPreview,
+      loading: true
     };
 
     const state = orderFeedReducer(loadingStateWithPreview, {
       type: getOrderByNumber.rejected.type
     });
 
-    expect(state.loading).toBe(false);
-    expect(state.orderPreview).toBe(null);
+    expect(state).toEqual(initialState);
   });
 });

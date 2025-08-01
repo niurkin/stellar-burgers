@@ -54,7 +54,7 @@ describe('Редьюсеры orderSlice', () => {
       type: placeOrder.pending.type
     });
 
-    expect(state.loading).toBe(true);
+    expect(state).toEqual(loadingState);
   });
 
   test('правильно обрабатывается placeOrder.fulfilled', () => {
@@ -76,6 +76,6 @@ describe('Редьюсеры orderSlice', () => {
       type: placeOrder.rejected.type
     });
 
-    expect(state.loading).toBe(false);
+    expect(state).toEqual(initialState);
   });
 });

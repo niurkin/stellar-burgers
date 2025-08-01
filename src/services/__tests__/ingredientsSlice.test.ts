@@ -11,17 +11,14 @@ describe('Редьюсеры ingredientsSlice', () => {
     loading: false
   };
 
-  const loadingState: TIngredientsState = {...initialState, loading: true};
+  const loadingState: TIngredientsState = { ...initialState, loading: true };
 
   test('правильно обрабатывается getIngredients.pending', () => {
     const state = ingredientsReducer(initialState, {
       type: getIngredients.pending.type
     });
 
-    expect(state).toEqual({
-      ingredients: [],
-      loading: true
-    });
+    expect(state).toEqual(loadingState);
   });
 
   test('правильно обрабатывается getIngredients.fulfilled', () => {
@@ -39,14 +36,10 @@ describe('Редьюсеры ingredientsSlice', () => {
   });
 
   test('правильно обрабатывается getIngredients.rejected', () => {
-
     const state = ingredientsReducer(loadingState, {
       type: getIngredients.rejected.type
     });
 
-    expect(state).toEqual({
-      ingredients: [],
-      loading: false
-    });
+    expect(state).toEqual(initialState);
   });
 });
