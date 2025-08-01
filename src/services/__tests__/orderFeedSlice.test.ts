@@ -18,9 +18,9 @@ describe('Редьюсеры orderFeedSlice', () => {
     orderPreview: null
   };
 
-  const loadingState: TOrderFeedState = {...initialState, loading: true};
+  const loadingState: TOrderFeedState = { ...initialState, loading: true };
 
-   test('правильно обрабатывается getAllOrders.pending', () => {
+  test('правильно обрабатывается getAllOrders.pending', () => {
     const state = orderFeedReducer(initialState, {
       type: getAllOrders.pending.type
     });
@@ -55,7 +55,7 @@ describe('Редьюсеры orderFeedSlice', () => {
   });
 
   test('правильно обрабатывается getUserOrders.fulfilled', () => {
-    const orders = [ mockOrder ];
+    const orders = [mockOrder];
 
     const state = orderFeedReducer(loadingState, {
       type: getUserOrders.fulfilled.type,
@@ -75,7 +75,10 @@ describe('Редьюсеры orderFeedSlice', () => {
   });
 
   test('правильно обрабатывается getOrderByNumber.pending', () => {
-    const stateWithPreview: TOrderFeedState = {...initialState, orderPreview: mockOrder};
+    const stateWithPreview: TOrderFeedState = {
+      ...initialState,
+      orderPreview: mockOrder
+    };
 
     const state = orderFeedReducer(stateWithPreview, {
       type: getOrderByNumber.pending.type
@@ -86,7 +89,7 @@ describe('Редьюсеры orderFeedSlice', () => {
   });
 
   test('правильно обрабатывается getOrderByNumber.fulfilled', () => {
-    const data = { orders: [ mockOrder ]};
+    const data = { orders: [mockOrder] };
 
     const state = orderFeedReducer(loadingState, {
       type: getOrderByNumber.fulfilled.type,
@@ -98,7 +101,10 @@ describe('Редьюсеры orderFeedSlice', () => {
   });
 
   test('правильно обрабатывается getOrderByNumber.rejected', () => {
-    const loadingStateWithPreview: TOrderFeedState = {...loadingState, orderPreview: mockOrder};
+    const loadingStateWithPreview: TOrderFeedState = {
+      ...loadingState,
+      orderPreview: mockOrder
+    };
 
     const state = orderFeedReducer(loadingStateWithPreview, {
       type: getOrderByNumber.rejected.type

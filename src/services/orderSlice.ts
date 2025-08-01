@@ -58,3 +58,4 @@ export const selectOrderLoading = (state: RootState) =>
   state.currentOrder.loading;
 
 export const { clearOrder, clearlastOrder, setOrder } = orderSlice.actions;
+export default orderSlice.reducer;

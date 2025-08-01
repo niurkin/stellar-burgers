@@ -35,7 +35,7 @@ export const mockOrder: TOrder = {
   createdAt: '2025-07-28T19:16:19.874Z',
   updatedAt: '2025-07-28T19:16:20.686Z',
   number: 77777,
-  ingredients: ['main-id', 'bun-id']
+  ingredients: ['bun-id', 'main-id', 'bun-id']
 };
 
 export const mockOrderData: TOrdersData = {
