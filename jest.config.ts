@@ -26,7 +26,6 @@ const config: Config = {
     "src/services/*.ts",
     "!src/services/buildOrderFromConstructor.ts",
     "!src/services/placeOrderFromConstructor.ts",
-    //"!src/cervices/errorLogMiddleware.ts",
     "!src/services/store.ts"
   ],
 
