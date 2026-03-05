@@ -4,7 +4,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { RootState } from './store';
 
 export type TConstructorState = {
-  bun: TIngredient | undefined;
+  bun: TConstructorIngredient | undefined;
   ingredients: Array<TConstructorIngredient>;
 };
 
@@ -55,6 +55,7 @@ export const {
   reorderIngredient,
   resetConstructor
 } = constructorSlice.actions;
+export default constructorSlice.reducer;
 export const selectConstructorState = (state: RootState) =>
   state.burgerConstructor;
 export const selectConstructorIngredients = (state: RootState) =>
