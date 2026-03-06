@@ -9,7 +9,7 @@ Stellar Burgers — это учебный проект, созданный в р
  ## Технологии
 
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=html,css,typescript,webpack,react,jest,cypress" height="50" />
+  <img src="https://skillicons.dev/icons?i=html,css,typescript,webpack,react,redux,jest,cypress" height="50" />
 </p>
 
 ## Особенности
