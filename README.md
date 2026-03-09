@@ -8,9 +8,42 @@ Stellar Burgers — это учебный проект, созданный в р
 
  ## Технологии
 
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=html,css,typescript,webpack,react,redux,jest,cypress" height="50" />
-</p>
+ <table align="center">
+  <tr>
+    <td align="center">
+      <img src="https://skillicons.dev/icons?i=html" width="50"/><br/>
+      <sub>HTML5</sub>
+    </td>
+    <td align="center">
+      <img src="https://skillicons.dev/icons?i=css" width="50"/><br/>
+      <sub>CSS3</sub>
+    </td>
+    <td align="center">
+      <img src="https://skillicons.dev/icons?i=typescript" width="50"/><br/>
+      <sub>TypeScript</sub>
+    </td>
+   <td align="center">
+      <img src="https://skillicons.dev/icons?i=webpack" width="50"/><br/>
+      <sub>Webpack</sub>
+    </td>
+   <td align="center">
+      <img src="https://skillicons.dev/icons?i=react" width="50"/><br/>
+      <sub>React</sub>
+    </td>
+   <td align="center">
+      <img src="https://skillicons.dev/icons?i=redux" width="50"/><br/>
+      <sub>Redux</sub>
+    </td>
+   <td align="center">
+      <img src="https://skillicons.dev/icons?i=jest" width="50"/><br/>
+      <sub>Jest</sub>
+    </td>
+    <td align="center">
+      <img src="https://skillicons.dev/icons?i=cypress" width="50"/><br/>
+      <sub>Cypress</sub>
+    </td>
+  </tr>
+</table>
 
 ## Особенности
 
